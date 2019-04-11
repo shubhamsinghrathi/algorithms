@@ -46,7 +46,7 @@ class MaxHeap:
             return None
         to_return = self.treeArr[0]
         self.size-=1
-        self.treeArr[0] = self.treeArr[self.size]
+        self.treeArr[0], self.treeArr[self.size] = (self.treeArr[self.size], self.treeArr[0]) ### here this could also use to make the same array sorted as we pop the items from top
         self.popAdjust(1)
         return to_return
 
