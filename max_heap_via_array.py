@@ -47,8 +47,13 @@ class MaxHeap:
         to_return = self.treeArr[0]
         self.size-=1
         self.treeArr[0], self.treeArr[self.size] = (self.treeArr[self.size], self.treeArr[0]) ### here this could also use to make the same array sorted as we pop the items from top
+        ###the upper line implements heap sort
         self.popAdjust(1)
         return to_return
+
+
+############## normal method of heap creation take O(n log n) time, but heapify process (where we go from inserting last to first element OR opposite direction) takes only O(n) time.
+
 
 mh = MaxHeap()
 mh.push(5)
