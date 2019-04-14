@@ -5,7 +5,8 @@
 #So, I'm using them both here
 
 class Node:
-    def __init__(self, value):
+    def __init__(self, key, value):
+        self.key = key
         self.value = value
         self.next = None
         self.prev = None
@@ -18,38 +19,39 @@ class LRUCache:
         self.end = None
         self.hashTable = {}
 
-    def push(self, value):
+    def push(self, key, value):
         try:
-            self.hashTable[value]
+            self.hashTable[key].value = value
+            self.get(key)
             return
         except:
             pass
         if self.size < self.maxSize:
             self.size+=1
             fVal = self.start
-            self.start = Node(value)
+            self.start = Node(key, value)
             if not self.end:
                 self.end = self.start
             else:
                 self.start.next = fVal
                 fVal.prev = self.start
-            self.hashTable[value] = self.start
+            self.hashTable[key] = self.start
             return
         lVal = self.end
         self.end = self.end.prev
         self.end.next = None
-        del self.hashTable[lVal.value]
+        del self.hashTable[lVal.key]
 
         fVal = self.start
-        self.start = Node(value)
+        self.start = Node(key, value)
         self.start.next = fVal
         fVal.prev = self.start
-        self.hashTable[value] = self.start
+        self.hashTable[key] = self.start
         return
 
-    def get(self, value):
+    def get(self, key):
         try:
-            val = self.hashTable[value]
+            val = self.hashTable[key]
         except:
             return None
         fVal = self.start
@@ -70,11 +72,12 @@ class LRUCache:
         return val.value
 
 cache = LRUCache(4)
-cache.push("a")
-cache.push("b")
-cache.push("c")
-cache.push("d")
-cache.push("e")
+cache.push("a", "A_____99")
+cache.push("b", "B_____99")
+cache.push("c", "C_____99")
+cache.push("d", "D_____99")
+cache.push("a", "AA_____99")
+cache.push("e", "E_____99")
 print(cache.get("a"))
 print(cache.get("b"))
 print(cache.get("c"))
